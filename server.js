@@ -4,7 +4,9 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 
 const app = express();
-const PORT = 3000;
+
+// Get the port from command-line arguments or default to 3000
+const PORT = process.argv[2] || 3000;
 
 // Middleware to parse JSON bodies
 app.use(bodyParser.json());
@@ -67,7 +69,6 @@ app.post('/api/timer', (req, res) => {
         res.json({ message: 'Timer state saved successfully' });
     });
 });
-
 
 // Default route
 app.get('/', (req, res) => {
