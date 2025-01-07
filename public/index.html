@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Timer</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Doto:wght,ROND@100..900,100&display=swap" rel="stylesheet">
+</head>
+
+<body class="font-nunito flex items-center justify-center h-screen">
+    <!-- Main Container -->
+    <div class="grid grid-cols-12 gap-6 w-full px-4 md:px-10">
+        <!-- Left Column -->
+        <div class="flex flex-col h-screen py-10 space-y-6 col-span-2">
+            <!-- Timer -->
+            <div id="timer" class="neumorphic-box rounded-full h-96 flex items-center justify-center relative">
+                <div class="spree-length flex justify-start absolute top-8">
+                    <div class="spree-length-indicator" id="spree"></div>
+                </div>
+                <div class="flex justify-between w-1/4 absolute bottom-8">
+                    <div class="state-indicator" id="focus-state"></div>
+                    <div class="state-indicator" id="short-break-state"></div>
+                    <div class="state-indicator" id="long-break-state"></div>
+                </div>
+                <svg class="absolute w-48 h-48 transform -rotate-90 z-0" viewBox="0 0 120 120"
+                    xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+                    <circle id="progress-ring" cx="60" cy="60" r="70" stroke="var(--accent-color)" stroke-width="15"
+                        fill="none" stroke-dasharray="314" stroke-dashoffset="314"></circle>
+                </svg>
+                <!-- Inner Circle -->
+                <div class="neumorphic-circle">
+                    <!-- Circular Progress Ring -->
+                    <!-- Time Display and Button -->
+                    <div class="flex flex-col items-center justify-center text-center">
+                        <!-- Time Display -->
+                        <span id="time-display" class="text-4xl font-bold font-nunito ">
+                            <span id="minute">25</span><span id="colon" class="-translate-y-6">:</span><span
+                                id="second">00</span>
+                        </span>
+                        <!-- State Toggle Button -->
+                        <div class="mt-4">
+                            <button id="state-toggle"
+                                class="neumorphic-button w-12 h-12 flex items-center justify-center z-50">
+                                <span id="state-icon">▶</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- State Indicator: 3 small circles with orange color -->
+            </div>
+            <!-- Settings -->
+            <div id="settings"
+                class="neumorphic-box flex-grow flex flex-col justify-start items-center rounded-lg p-4 gap-10">
+
+                <div id="forms" class="grid grid-cols-3 gap-4">
+
+                    <!-- Focus Timer Length -->
+                    <form id="focus-length-form" class="flex items-center space-x-2">
+                        <label for="focus-length" class="text-light-primary">🔨</label>
+                        <input id="focus-length" type="number" min="1" max="60" value="25"
+                            class="neumorphic-button w-16 text-center" />
+                    </form>
+
+                    <!-- Short Break Length -->
+                    <form id="short-break-length-form" class="flex items-center space-x-2">
+                        <label for="short-break-length" class="text-light-primary">🍵</label>
+                        <input id="short-break-length" type="number" min="1" max="30" value="5"
+                            class="neumorphic-button w-16 text-center" />
+                    </form>
+
+                    <button id="save-settings" class="neumorphic-button px-4 py-2 row-span-2">✔️</button>
+
+                    <!-- Long Break Length -->
+                    <form id="long-break-length-form" class="flex items-center space-x-2">
+                        <label for="long-break-length" class="text-light-primary">💤</label>
+                        <input id="long-break-length" type="number" min="1" max="60" value="15"
+                            class="neumorphic-button w-16 text-center" />
+                    </form>
+
+                    <!-- Number of Focus Spree -->
+                    <form id="focus-spree-form" class="flex items-center space-x-2">
+                        <label for="focus-spree" class="text-light-primary">🔁</label>
+                        <input id="focus-spree" type="number" min="1" max="10" value="4"
+                            class="neumorphic-button w-16 text-center" />
+                    </form>
+
+                </div>
+
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" class="neumorphic-button w-full">💡</button>
+
+            </div>
+
+        </div>
+
+        <!-- Center Column -->
+        <div class="flex flex-col h-screen py-10 space-y-6 col-span-6">
+
+            <!-- Todo List -->
+            <div id="todo" class="neumorphic-box h-full rounded-lg flex flex-col space-y-4 p-4 todo-container">
+
+                <!-- Active Task -->
+                <div id="active-task" class="active-task">
+                    <!-- <div class="flex justify-between items-center w-full">
+                        <div>
+                            <p class="text-sm">Software Engineering</p>
+                            <p class="text-xl font-bold">Write Introduction Section</p>
+                            <p class="text-sm">70 minutes</p>
+                        </div>
+                        <div class="task-buttons">
+                            <button class="neumorphic-button edit-button">✏️</button>
+                            <button class="neumorphic-button delete-button">❌</button>
+                        </div>
+                    </div> -->
+                </div>
+
+                <!-- Rest of the Tasks -->
+                <div id="task-list" class="flex flex-col space-y-4 overflow-y-auto task-list">
+                    <!-- Task Item -->
+                    <!-- <div class="task-item">
+                        <div class="flex justify-between items-center w-full">
+                            <div>
+                                <p class="text-sm">Research</p>
+                                <p class="text-lg font-semibold">Review Literature</p>
+                                <p class="text-sm">50 minutes</p>
+                            </div>
+                            <div class="task-buttons">
+                                <button class="neumorphic-button edit-button">✏️</button>
+                                <button class="neumorphic-button delete-button">❌</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-item">
+                        <div class="flex justify-between items-center w-full">
+                            <div>
+                                <p class="text-sm">Writing</p>
+                                <p class="text-lg font-semibold">Write Abstract</p>
+                                <p class="text-sm">30 minutes</p>
+                            </div>
+                            <div class="task-buttons">
+                                <button class="neumorphic-button edit-button">✏️</button>
+                                <button class="neumorphic-button delete-button">❌</button>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <!-- Additional task items can be dynamically added here -->
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Column -->
+        <div class="flex flex-col h-screen py-10 space-y-6 col-span-4">
+            <!-- Music -->
+            <div id="music" class="neumorphic-box h-48 rounded-lg p-4">
+                <iframe width="200" height="150" src="https://www.youtube.com/embed/jfKfPfyJRdk?si=T_bXTdCRU8WGaYKP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <!-- Analytics -->
+            <div id="analytics" class="neumorphic-box h-48 rounded-lg"></div>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+    <script src="js/timer.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/todo.js"></script>
+</body>
+
+</html>

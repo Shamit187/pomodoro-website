@@ -1,0 +1,242 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    background-color: var(--background-color);
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+@layer utilities {
+    #time-display {
+        font-family: "Doto", serif;
+        font-weight: 400; /* Regular weight */
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.5);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .state-indicator {
+        @apply w-2 h-2 rounded-full;
+        animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .state-indicator-on {
+        background-color: var(--accent-color);
+        box-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color);
+    }
+
+    .state-indicator-off {
+        background-color: var(--background-color);
+        box-shadow: none;
+    }
+
+    .spree-length {
+        @apply h-2 w-48 rounded-full;
+        background-color: var(--primary-color);
+        box-shadow: inset var(--shadow-light), inset var(--shadow-dark);
+    }
+
+    .spree-length-indicator {
+        @apply h-2 rounded-full;
+        background-color: var(--accent-color);
+        width: 0%; /* Start at 0% */
+        transition: width 0.3s ease-in-out; /* Smooth transition for width change */
+    }
+
+    .neumorphic-circle {
+        @apply absolute w-60 h-60 rounded-full flex items-center justify-center z-10 shadow-lg;
+        background-color: var(--background-color); /* Dynamic background color */
+        /* Inverse neumorphic shadows with directional lighting */
+        box-shadow: inset var(--shadow-light), inset var(--shadow-dark);
+        color: var(--primary-color); /* Dynamic text color */
+    }
+
+    .neumorphic-box {
+        @apply shadow-lg rounded-lg;
+        background-color: var(--background-color);
+        box-shadow: var(--shadow-light), var(--shadow-dark);
+        
+    }
+
+    .neumorphic-button {
+        @apply text-base font-semibold py-2 px-2 rounded-lg;
+        color: var(--accent-color);
+        background-color: var(--background-color);
+        box-shadow: var(--shadow-light), var(--shadow-dark);
+        transition: transform 0.1s ease-in-out;
+    }
+
+    .neumorphic-button:active {
+        transform: scale(0.95);
+        box-shadow: inset var(--shadow-light), inset var(--shadow-dark);
+    }
+    
+    /* Progress Ring Glow */
+    #progress-ring {
+        transition: stroke-dashoffset 1s linear;
+        stroke-dasharray: 283; /* Match circumference calculation */
+        filter:  drop-shadow(0 0 10px var(--accent-color));
+    }
+
+    
+
+    /* Timer Circular Border */
+    #timer-circle {
+        border-color: var(--primary-color);
+    }
+
+    /* Timer Active State */
+    #timer-circle.active {
+        border-color: var(--accent-color);
+        box-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color);
+    }
+
+    /* Timer Paused State */
+    #timer-circle.paused {
+        border-color: var(--primary-color);
+        box-shadow: none;
+    }
+
+    /* Blinking Colon */
+    @keyframes blink {
+        50% {
+            opacity: 0;
+        }
+    }
+    
+    /* Blinking colon only when this class is added */
+    .blinking {
+        animation: blink 1s step-end infinite;
+    }
+
+
+    /* Labels */
+    #settings label {
+        font-size: 0.9rem;
+        color: var(--primary-color);
+    }
+
+    /* Input Fields */
+    #settings input {
+        appearance: none;
+        outline: none;
+        box-shadow: var(--shadow-light), var(--shadow-dark);
+        border: none;
+        background-color: var(--background-color);
+        color: var(--primary-color);
+        font-size: 1rem;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        text-align: center;
+    }
+
+    #settings input:focus {
+        box-shadow: inset var(--shadow-light), inset var(--shadow-dark);
+    }
+
+
+    /* To Do List Styles */
+    /* Main Container */
+    .todo-container {
+        @apply overflow-y-auto relative;
+        background-color: var(--background-color);
+        color: var(--primary-color);
+    }
+    
+    .todo-container::-webkit-scrollbar {
+        display: none; /* Hide scrollbar for WebKit browsers */
+    }
+    
+    .todo-container {
+        scrollbar-width: none; /* Hide scrollbar for Firefox */
+    }
+
+    .task-list {
+        @apply overflow-y-auto relative;
+    }
+
+    .task-list::-webkit-scrollbar {
+        display: none; /* Hide scrollbar for WebKit browsers */
+    }
+
+    .task-list {
+        scrollbar-width: none; /* Hide scrollbar for Firefox */
+    }
+
+    /* Task Item (Default Style) */
+    .task-item {
+        @apply flex items-center justify-between;
+        color: var(--primary-color);
+        border-radius: 0.5rem;
+        padding: 1rem;
+        transition: box-shadow 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .task-item:hover {
+        box-shadow: var(--shadow-hover);
+        transform: translateY(-3px);
+        cursor: pointer;
+    }
+
+    .task-item.up {
+        transform: translateY(-20px); /* Move up */
+        opacity: 1;
+    }
+    
+    .task-item.down {
+        transform: translateY(20px); /* Move down */
+        opacity: 1;
+    }
+    
+    .task-item.fade-out {
+        opacity: 0; /* Fades out for removal */
+    }
+
+    /* Active Task */
+    .active-task {
+        @apply flex items-center justify-between;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        background-color: var(--background-color);
+        color: var(--primary-color);
+        box-shadow: var(--shadow-light), var(--shadow-dark);
+    }
+
+    /* Icon Buttons (Edit and Delete) */
+    .icon-button {
+        background-color: var(--background-color);
+        color: var(--primary-color);
+        border-radius: 50%;
+        padding: 0.5rem;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .icon-button:hover {
+        background-color: var(--accent-color);
+        color: var(--background-color);
+        transform: scale(1.1);
+    }
+
+    /* Edit and Delete Specific Buttons */
+    .edit-button {
+        /* Additional styles for edit button, if needed */
+        
+    }
+
+    .delete-button {
+        /* Additional styles for delete button, if needed */
+    }
+
+    .task-buttons {
+        @apply flex space-x-3;
+    }
+}
