@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Doto:wght,ROND@100..900,100&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
 <body class="font-nunito flex items-center justify-center h-screen">
@@ -55,47 +56,81 @@
             </div>
             <!-- Settings -->
             <div id="settings"
-                class="neumorphic-box flex-grow flex flex-col justify-start items-center rounded-lg p-4 gap-10">
+                class="neumorphic-box  flex flex-col justify-start items-center rounded-lg p-4 gap-6 pb-6">
+                <button id="theme-toggle" class="neumorphic-button w-full flex items-center justify-center">
+                    <span class="material-symbols-outlined">lightbulb</span>
+                </button>
 
                 <div id="forms" class="grid grid-cols-3 gap-4">
 
                     <!-- Focus Timer Length -->
                     <form id="focus-length-form" class="flex items-center space-x-2">
-                        <label for="focus-length" class="text-light-primary">🔨</label>
+                        <label for="focus-length" class="text-light-primary"><span class="material-symbols-outlined">
+                            mindfulness
+                            </span></label>
                         <input id="focus-length" type="number" min="1" max="60" value="25"
-                            class="neumorphic-button w-16 text-center" />
+                            class="neumorphic-form w-16 text-center" />
                     </form>
 
                     <!-- Short Break Length -->
                     <form id="short-break-length-form" class="flex items-center space-x-2">
-                        <label for="short-break-length" class="text-light-primary">🍵</label>
+                        <label for="short-break-length" class="text-light-primary"><span class="material-symbols-outlined">
+                            coffee
+                            </span></label>
                         <input id="short-break-length" type="number" min="1" max="30" value="5"
-                            class="neumorphic-button w-16 text-center" />
+                            class="neumorphic-form w-16 text-center" />
                     </form>
 
-                    <button id="save-settings" class="neumorphic-button px-4 py-2 row-span-2">✔️</button>
+                    <button id="save-settings" class="neumorphic-button px-4 py-2 row-span-2"><span class="material-symbols-outlined task-buttons">
+                        check
+                        </span></button>
 
                     <!-- Long Break Length -->
                     <form id="long-break-length-form" class="flex items-center space-x-2">
-                        <label for="long-break-length" class="text-light-primary">💤</label>
+                        <label for="long-break-length" class="text-light-primary"><span class="material-symbols-outlined">
+                            airline_seat_flat
+                            </span></label>
                         <input id="long-break-length" type="number" min="1" max="60" value="15"
-                            class="neumorphic-button w-16 text-center" />
+                            class="neumorphic-form w-16 text-center" />
                     </form>
 
                     <!-- Number of Focus Spree -->
                     <form id="focus-spree-form" class="flex items-center space-x-2">
-                        <label for="focus-spree" class="text-light-primary">🔁</label>
+                        <label for="focus-spree" class="text-light-primary"><span class="material-symbols-outlined">
+                            replay
+                            </span></label>
                         <input id="focus-spree" type="number" min="1" max="10" value="4"
-                            class="neumorphic-button w-16 text-center" />
+                            class="neumorphic-form w-16 text-center" />
                     </form>
 
                 </div>
 
-                <!-- Theme Toggle -->
-                <button id="theme-toggle" class="neumorphic-button w-full">💡</button>
+                <form id="task-form" class="flex flex-col space-y-4 w-full">
+                    <!-- Task Tag -->
+                    <div class="flex items-center space-x-2">
+                        <label for="task-tag" class="text-light-primary w-1/5">Tag:</label>
+                        <input id="task-tag" type="text" placeholder="e.g., Research"
+                            class="neumorphic-form flex-grow text-center" required />
+                    </div>
+
+                    <!-- Task Name -->
+                    <div class="flex items-center space-x-2">
+                        <label for="task-name" class="text-light-primary w-1/5">Name:</label>
+                        <input id="task-name" type="text" placeholder="e.g., Analyze Data"
+                            class="neumorphic-form flex-grow text-center" required />
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button id="add-task-button" type="submit" class="neumorphic-button px-4 py-4 w-full">
+                        Add Task
+                    </button>
+                </form>
+
 
             </div>
-
+            <div id="music" class="neumorphic-box flex-grow">
+                <!-- <iframe width="200" height="150" src="https://www.youtube.com/embed/jfKfPfyJRdk?si=T_bXTdCRU8WGaYKP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
+            </div>
         </div>
 
         <!-- Center Column -->
@@ -159,11 +194,26 @@
         <!-- Right Column -->
         <div class="flex flex-col h-screen py-10 space-y-6 col-span-4">
             <!-- Music -->
-            <div id="music" class="neumorphic-box h-48 rounded-lg p-4">
-                <iframe width="200" height="150" src="https://www.youtube.com/embed/jfKfPfyJRdk?si=T_bXTdCRU8WGaYKP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <div id="music" class="neumorphic-box h-72 rounded-lg p-4">
+                <!-- <iframe width="200" height="150" src="https://www.youtube.com/embed/jfKfPfyJRdk?si=T_bXTdCRU8WGaYKP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
             </div>
             <!-- Analytics -->
-            <div id="analytics" class="neumorphic-box h-48 rounded-lg"></div>
+            <div id="analytics" class="neumorphic-box h-full rounded-lg py-4">
+                <div id="archive-task" class="">
+                </div>
+            </div>
+            <div id="daily-progress" class="neumorphic-box h-72 rounded-lg p-4">
+                <div id="daily-progress" class="flex flex-col space-y-4">
+                    <div class="flex justify-between items-center">
+                        <p class="text-lg">Daily Progress</p>
+                        <p class="text-lg">4/4</p>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-indicator"></div>
+                    </div>
+                </div>
+            </div>  
+
         </div>
     </div>
     <script src="js/script.js"></script>

@@ -2,7 +2,7 @@
   {
     "tag": "Software Engineering",
     "topic": "Write Introduction Section",
-    "minute": 67,
+    "minute": 70,
     "active": true
   },
   {
@@ -51,12 +51,6 @@
     "tag": "Data Analysis",
     "topic": "Generate Visualizations",
     "minute": 35,
-    "active": false
-  },
-  {
-    "tag": "System Design",
-    "topic": "Evaluate Load Balancer Options",
-    "minute": 55,
     "active": false
   }
 ]

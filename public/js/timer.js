@@ -288,6 +288,7 @@ if (playState === "play") {
 const activeTaskContainer = document.getElementById("active-task");
 const taskListContainer = document.getElementById("task-list");
 
+
 async function loadTasks() {
     try {
         const response = await fetch('/api/tasks');
@@ -320,6 +321,12 @@ async function saveTasks() {
 
 // Render Tasks
 function renderTasks() {
+    // If no active task exists, promote the first inactive task
+    if (!tasks.some((task) => task.active) && tasks.length > 0) {
+        tasks[0].active = true;
+        saveTasks(); // Save the updated task state
+    }
+
     // Clear existing tasks
     activeTaskContainer.innerHTML = "";
     taskListContainer.innerHTML = "";
@@ -335,11 +342,17 @@ function renderTasks() {
                     <p class="text-sm">${activeTask.minute} minutes</p>
                 </div>
                 <div class="task-buttons">
-                    <button class="neumorphic-button edit-button">✏️</button>
-                    <button class="neumorphic-button delete-button">❌</button>
+                    <button class="neumorphic-button edit-button"><span class="material-symbols-outlined">edit</span></button>
+                    <button class="neumorphic-button delete-button"><span class="material-symbols-outlined">delete</span></button>
                 </div>
             </div>
         `;
+
+        // Add delete button logic for the active task
+        const deleteButton = activeTaskContainer.querySelector(".delete-button");
+        deleteButton.addEventListener("click", () => {
+            handleTaskDeletion(tasks.findIndex((task) => task.active)); // Pass index of active task
+        });
     }
 
     // Render Inactive Tasks
@@ -355,10 +368,10 @@ function renderTasks() {
                         <p class="text-sm">${task.minute} minutes</p>
                     </div>
                     <div class="task-buttons">
-                        <button class="neumorphic-button up-button">🔼</button>
-                        <button class="neumorphic-button down-button">🔽</button>
-                        <button class="neumorphic-button edit-button">✏️</button>
-                        <button class="neumorphic-button delete-button">❌</button>
+                        <button class="neumorphic-button up-button"><span class="material-symbols-outlined">arrow_circle_up</span></button>
+                        <button class="neumorphic-button down-button"><span class="material-symbols-outlined">arrow_circle_down</span></button>
+                        <button class="neumorphic-button edit-button"><span class="material-symbols-outlined">edit</span></button>
+                        <button class="neumorphic-button delete-button"><span class="material-symbols-outlined">delete</span></button>
                     </div>
                 </div>
             `;
@@ -377,12 +390,19 @@ function renderTasks() {
                 moveTaskDown(index);
             });
 
+            // Add delete button logic
+            const deleteButton = taskElement.querySelector(".delete-button");
+            deleteButton.addEventListener("click", (e) => {
+                e.stopPropagation(); // Prevent task click propagation
+                handleTaskDeletion(index);
+            });
+
             // Add event listener for task click to make it active
             taskElement.addEventListener("click", () => handleTaskClick(index));
 
             taskListContainer.appendChild(taskElement);
         }
-    }); 
+    });
 }
 
 
@@ -431,6 +451,117 @@ function handleTaskClick(index) {
 
     // Re-render the tasks
     renderTasks();
+}
+
+// Add Event Listener to Task Form
+document.getElementById('task-form').addEventListener('submit', (event) => {
+    event.preventDefault(); // Prevent form from refreshing the page
+
+    // Get form values
+    const tagInput = document.getElementById('task-tag');
+    const nameInput = document.getElementById('task-name');
+
+    const newTask = {
+        tag: tagInput.value,
+        topic: nameInput.value,
+        minute: 0, // Default value for minute, can be updated later
+        active: false // Default state for a new task
+    };
+
+    // Add the new task to the tasks array
+    tasks.push(newTask);
+
+    // Save tasks to the server (if applicable) and re-render
+    saveTasks();
+    renderTasks();
+
+    // Clear form inputs
+    tagInput.value = '';
+    nameInput.value = '';
+});
+
+// DOM Elements
+const archiveTaskContainer = document.getElementById("archive-task");
+
+// Archive Task List
+let archivedTasks = [];
+
+// Fetch Archived Tasks
+async function loadArchivedTasks() {
+    try {
+        const response = await fetch('/api/archived-tasks');
+        if (!response.ok) {
+            throw new Error('Failed to fetch archived tasks');
+        }
+        archivedTasks = await response.json();
+        renderArchivedTasks();
+    } catch (error) {
+        console.error('Error loading archived tasks:', error);
+    }
+}
+
+// Save Archived Tasks
+async function saveArchivedTasks() {
+    try {
+        const response = await fetch('/api/archived-tasks', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(archivedTasks),
+        });
+        if (!response.ok) {
+            throw new Error('Failed to save archived tasks');
+        }
+        console.log('Archived tasks saved successfully');
+    } catch (error) {
+        console.error('Error saving archived tasks:', error);
+    }
+}
+
+// Render Archived Tasks
+function renderArchivedTasks() {
+    archiveTaskContainer.innerHTML = "";
+
+    archivedTasks.forEach((task) => {
+        const taskElement = document.createElement("div");
+        taskElement.className = "archived";
+        taskElement.innerHTML = `
+            <div class="flex justify-start items-center w-full gap-4">
+                <button class="neumorphic-button recycle-button"><span class="material-symbols-outlined">recycling</span></button>
+                <button class="neumorphic-button recycle-button"><span class="material-symbols-outlined">delete_forever</span></button>
+                <p class="text-base"> <span class="font-semibold">${task.topic}</span>, <span class="font-semibold" style="color:var(--accent-color)">${task.minute}</span> mins</p>
+            </div>
+        `;
+        archiveTaskContainer.appendChild(taskElement);
+    });
+}
+
+// Load Archived Tasks on Page Load
+document.addEventListener("DOMContentLoaded", async () => {
+    await loadArchivedTasks();
+});
+
+// Handle Task Deletion
+function handleTaskDeletion(index) {
+    // Check if the task to delete is active
+    if (tasks[index].active) {
+        // Promote the first inactive task (if available) to active
+        const firstInactiveIndex = tasks.findIndex((task) => !task.active);
+        if (firstInactiveIndex !== -1) {
+            tasks[firstInactiveIndex].active = true;
+        }
+    }
+
+    // Remove the task from the main list and add it to the archive
+    const [deletedTask] = tasks.splice(index, 1);
+    archivedTasks.push(deletedTask);
+
+    // Save the updated lists
+    saveArchivedTasks(); // Save archived tasks to the server
+    saveTasks(); // Save active/inactive tasks to the server
+
+    // Re-render the tasks
+    renderTasks();
+    renderArchivedTasks();
 }
 
 // Initial Render on Page Load

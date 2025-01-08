@@ -68,7 +68,8 @@ body {
     }
 
     .neumorphic-button {
-        @apply text-base font-semibold py-2 px-2 rounded-lg;
+        
+        @apply text-base font-semibold py-2 px-2 rounded-lg flex items-center justify-center;
         color: var(--accent-color);
         background-color: var(--background-color);
         box-shadow: var(--shadow-light), var(--shadow-dark);
@@ -79,12 +80,47 @@ body {
         transform: scale(0.95);
         box-shadow: inset var(--shadow-light), inset var(--shadow-dark);
     }
+
+    .neumorphic-form {
+        @apply text-base font-semibold py-2 px-2 rounded-lg;
+        color: var(--primary-color);
+        background-color: var(--background-color);
+        box-shadow: inset var(--shadow-dark),inset var(--shadow-light);
+        transition: transform 0.1s ease-in-out;
+    }
+
+    .neumorphic-form:focus {
+        box-shadow: 0 0 10px var(--accent-color), inset var(--shadow-dark), inset var(--shadow-light);
+        outline: none; /* Remove default focus outline if necessary */
+        transform: scale(1.02); /* Slightly enlarge for a more interactive feel (optional) */
+    }
+
+    .neumorphic-form[type="number"] {
+        appearance: textfield; /* Removes the slider in most modern browsers */
+    }
     
+    .neumorphic-form[type="number"]::-webkit-inner-spin-button,
+    .neumorphic-form[type="number"]::-webkit-outer-spin-button {
+        appearance: none; /* Removes the slider for WebKit-based browsers */
+        margin: 0; /* Ensures no unexpected spacing */
+    }
+
     /* Progress Ring Glow */
     #progress-ring {
         transition: stroke-dashoffset 1s linear;
         stroke-dasharray: 283; /* Match circumference calculation */
         filter:  drop-shadow(0 0 10px var(--accent-color));
+    }
+
+    .material-symbols-outlined {
+        font-variation-settings:
+            'FILL' 0, /* Set 1 for filled, 0 for outlined */
+            'wght' 400, /* Weight */
+            'GRAD' 0, /* Gradient */
+            'opsz' 24; /* Optical size */
+        font-size: 24px; /* Adjust size */
+        /* color: var(--primary-color); Dynamic color based on theme */
+        transition: color 0.3s ease;
     }
 
     
@@ -126,7 +162,7 @@ body {
     }
 
     /* Input Fields */
-    #settings input {
+    /* #settings input {
         appearance: none;
         outline: none;
         box-shadow: var(--shadow-light), var(--shadow-dark);
@@ -137,11 +173,11 @@ body {
         padding: 0.5rem;
         border-radius: 0.5rem;
         text-align: center;
-    }
-
+    } */
+/* 
     #settings input:focus {
         box-shadow: inset var(--shadow-light), inset var(--shadow-dark);
-    }
+    } */
 
 
     /* To Do List Styles */
@@ -180,6 +216,7 @@ body {
         padding: 1rem;
         transition: box-shadow 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
     }
+    
 
     .task-item:hover {
         box-shadow: var(--shadow-hover);
@@ -237,6 +274,23 @@ body {
     }
 
     .task-buttons {
-        @apply flex space-x-3;
+        @apply flex gap-4;
+    }
+
+    .archived {
+        @apply flex items-center justify-between px-6 py-2;
+        color: var(--primary-color);
+    }
+
+    .archived-list {
+        @apply overflow-y-auto relative;
+    }
+
+    .archived-list::-webkit-scrollbar {
+        display: none; /* Hide scrollbar for WebKit browsers */
+    }
+
+    .archived-list {
+        scrollbar-width: none; /* Hide scrollbar for Firefox */
     }
 }

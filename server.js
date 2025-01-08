@@ -70,6 +70,39 @@ app.post('/api/timer', (req, res) => {
     });
 });
 
+const archivedTasksFilePath = path.join(__dirname, 'archived-tasks.json');
+
+// Fetch Archived Tasks
+app.get('/api/archived-tasks', (req, res) => {
+    console.log('Fetching archived tasks...');
+    fs.readFile(archivedTasksFilePath, 'utf-8', (err, data) => {
+        if (err) {
+            console.error('Error reading archived tasks file:', err.message);
+            return res.status(500).json({ error: 'Failed to load archived tasks' });
+        }
+        try {
+            const parsedData = JSON.parse(data);
+            res.json(parsedData);
+        } catch (parseError) {
+            console.error('Error parsing archived tasks file:', parseError.message);
+            return res.status(500).json({ error: 'Failed to parse archived tasks' });
+        }
+    });
+});
+
+// Update Archived Tasks
+app.post('/api/archived-tasks', (req, res) => {
+    const updatedArchivedTasks = req.body;
+    console.log('Updating archived tasks...', updatedArchivedTasks);
+    fs.writeFile(archivedTasksFilePath, JSON.stringify(updatedArchivedTasks, null, 2), (err) => {
+        if (err) {
+            console.error('Error writing to archived tasks file:', err.message);
+            return res.status(500).json({ error: 'Failed to save archived tasks' });
+        }
+        res.json({ message: 'Archived tasks saved successfully' });
+    });
+});
+
 // Default route
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
