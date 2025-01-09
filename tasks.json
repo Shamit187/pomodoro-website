@@ -2,7 +2,7 @@
   {
     "tag": "Software Engineering",
     "topic": "Write Introduction Section",
-    "minute": 70,
+    "minute": 96,
     "active": true
   },
   {
@@ -21,12 +21,6 @@
     "tag": "Data Analysis",
     "topic": "Clean Dataset",
     "minute": 40,
-    "active": false
-  },
-  {
-    "tag": "System Design",
-    "topic": "Draft Architecture Diagram",
-    "minute": 90,
     "active": false
   },
   {
@@ -51,6 +45,12 @@
     "tag": "Data Analysis",
     "topic": "Generate Visualizations",
     "minute": 35,
+    "active": false
+  },
+  {
+    "tag": "Research",
+    "topic": "Analuze Dataset",
+    "minute": 0,
     "active": false
   }
 ]

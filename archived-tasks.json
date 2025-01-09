@@ -16,5 +16,11 @@
     "topic": "Evaluate Load Balancer Options",
     "minute": 55,
     "active": true
+  },
+  {
+    "tag": "System Design",
+    "topic": "Draft Architecture Diagram",
+    "minute": 90,
+    "active": false
   }
 ]

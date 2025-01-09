@@ -173,6 +173,25 @@ function updateTimeDisplay() {
     secondElement.textContent = String(seconds).padStart(2, "0");
 }
 
+function updateTitle() {
+    const minutes = Math.floor(timeRemaining / 60);
+    const seconds = timeRemaining % 60;
+
+    // Determine the state text for the title
+    const stateText = timerState === "focus" ? "Focus" : "Break";
+
+    // Determine the play/pause icon
+    const playIcon = playState === "play" ? "▶️" : "⏸️";
+
+    // Update the website tab title
+    document.title = `${playIcon} ${stateText} ${minutes}:${String(seconds).padStart(2, "0")}`;
+}
+
+// Periodically update the title
+setInterval(() => {
+    updateTitle();
+}, 1000);
+
 function updateSpreeLengthIndicator() {
     const spreeIndicator = document.getElementById("spree");
 
@@ -221,9 +240,12 @@ function switchToNextState() {
             completedFocusSessions % focusSpree === 0 ? "longBreak" : "shortBreak";
         timeRemaining =
             timerState === "shortBreak" ? shortBreakDuration : longBreakDuration;
+
+        sendNotification(`Time for a ${timerState === "shortBreak" ? "short break" : "long break"}!`);
     } else {
         timerState = "focus";
         timeRemaining = focusDuration;
+        sendNotification("Time to focus!");
     }
 
     updateStateIndicators();
@@ -231,22 +253,51 @@ function switchToNextState() {
     isSwitchingState = false;
 }
 
+// Helper function to send notifications
+function sendNotification(message) {
+    if (Notification.permission === "granted") {
+        new Notification("Pomodoro Timer", {
+            body: message,
+            icon: "resource/alert.png", // Optional: Add an icon path here
+        });
+    } else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then((permission) => {
+            if (permission === "granted") {
+                new Notification("Pomodoro Timer", {
+                    body: message,
+                    icon: "resource/rest.png", // Optional: Add an icon path here
+                });
+            }
+        });
+    }
+}
 
 function startTimer() {
     if (playState === "play") return;
+
     playState = "play";
     stateIcon.textContent = "||";
-    timerInterval = setInterval(() => {
+
+    const startTime = Date.now(); // Get the current timestamp
+    const targetEndTime = startTime + timeRemaining * 1000; // Calculate the exact end time
+
+    function tick() {
+        if (playState !== "play") return; // Stop if paused or stopped
+
+        const now = Date.now(); // Get the current timestamp
+        timeRemaining = Math.max(0, Math.ceil((targetEndTime - now) / 1000)); // Calculate remaining time
+
         if (timeRemaining > 0) {
-            if (debug) timeRemaining-=10;
-            else timeRemaining--;
             updateTimeDisplay();
             updateProgressRing();
             saveState();
+            requestAnimationFrame(tick); // Schedule the next tick
         } else {
             handleTimerCompletion();
         }
-    }, 1000);
+    }
+
+    requestAnimationFrame(tick); // Start the timer loop
 }
 
 function pauseTimer() {

@@ -194,8 +194,21 @@
         <!-- Right Column -->
         <div class="flex flex-col h-screen py-10 space-y-6 col-span-4">
             <!-- Music -->
-            <div id="music" class="neumorphic-box h-72 rounded-lg p-4">
-                <!-- <iframe width="200" height="150" src="https://www.youtube.com/embed/jfKfPfyJRdk?si=T_bXTdCRU8WGaYKP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
+            <div id="music" class="neumorphic-box flex h-72 rounded-lg p-4 items-center gap-16">
+                <iframe 
+                    id="music-iframe" 
+                    width="200" 
+                    height="150" 
+                    src="https://www.youtube.com/embed/jfKfPfyJRdk?si=JnJryx0uYwVDwqy_&amp;controls=0" 
+                    title="YouTube video player" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    referrerpolicy="strict-origin-when-cross-origin" 
+                    allowfullscreen>
+                </iframe>
+                <div class="grid grid-cols-5 gap-8">
+                    <!-- 16 buttons will be rendered here dynamically -->
+                </div>
             </div>
             <!-- Analytics -->
             <div id="analytics" class="neumorphic-box h-full rounded-lg py-4">
@@ -220,6 +233,7 @@
     <script src="js/timer.js"></script>
     <script src="js/theme.js"></script>
     <script src="js/todo.js"></script>
+    <script src="js/music.js"></script>
 </body>
 
 </html>

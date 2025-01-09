@@ -293,4 +293,9 @@ body {
     .archived-list {
         scrollbar-width: none; /* Hide scrollbar for Firefox */
     }
+
+    .music-active {
+        /* make box shadow none */
+        box-shadow: none;
+    }
 }
