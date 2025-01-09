@@ -103,6 +103,33 @@ app.post('/api/archived-tasks', (req, res) => {
     });
 });
 
+// music player
+const musicDirectory = path.join(__dirname, 'public', 'music');
+
+app.get('/api/playlists', (req, res) => {
+    console.log('Fetching playlists...');
+    fs.readdir(musicDirectory, (err, folders) => {
+        if (err) {
+            console.error('Error reading music directory:', err);
+            return res.status(500).json({ error: 'Failed to load playlists' });
+        }
+
+        // Filter only directories and fetch tracks in each directory
+        const playlists = folders
+            .filter(folder => fs.statSync(path.join(musicDirectory, folder)).isDirectory())
+            .map(folder => {
+                const folderPath = path.join(musicDirectory, folder);
+                const tracks = fs.readdirSync(folderPath).filter(file => file.endsWith('.mp3')); // Only .mp3 files
+                return {
+                    name: folder,
+                    tracks: tracks
+                };
+            });
+
+        res.json({ playlists });
+    });
+});
+
 // Default route
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));

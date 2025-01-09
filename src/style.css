@@ -82,7 +82,7 @@ body {
     }
 
     .neumorphic-form {
-        @apply text-base font-semibold py-2 px-2 rounded-lg;
+        @apply text-sm font-semibold py-2 px-2 rounded-lg;
         color: var(--primary-color);
         background-color: var(--background-color);
         box-shadow: inset var(--shadow-dark),inset var(--shadow-light);
@@ -103,6 +103,16 @@ body {
     .neumorphic-form[type="number"]::-webkit-outer-spin-button {
         appearance: none; /* Removes the slider for WebKit-based browsers */
         margin: 0; /* Ensures no unexpected spacing */
+    }
+
+    .neumorphic-form::-webkit-scrollbar {
+        display: none; /* Hide scrollbar for WebKit browsers */
+    }
+
+    .divider {
+        @apply w-full h-[2px] my-4 mx-4;
+        background-color: var(--primary-color);
+        opacity: 0.1;
     }
 
     /* Progress Ring Glow */
@@ -294,8 +304,169 @@ body {
         scrollbar-width: none; /* Hide scrollbar for Firefox */
     }
 
+    .neumorphic-musicplay-button {
+        @apply text-xs font-semibold w-10 h-10 py-2 px-2 rounded-lg flex items-center justify-center overflow-hidden relative;
+        color: var(--primary-color);
+        background-color: var(--background-color);
+        box-shadow: var(--shadow-light), var(--shadow-dark);
+        transition: transform 0.1s ease-in-out;
+        white-space: nowrap; /* Ensure text stays in a single line */
+    }
+
+    .neumorphic-musicplay-button:active {
+        transform: scale(0.95);
+        box-shadow: inset var(--shadow-light), inset var(--shadow-dark);
+    }
+
+    
+    .neumorphic-music-button {
+        @apply text-xs font-semibold w-14 h-10 rounded-lg flex items-center justify-center overflow-hidden relative;
+        color: var(--primary-color);
+        background-color: var(--background-color);
+        box-shadow: var(--shadow-light), var(--shadow-dark);
+        transition: transform 0.1s ease-in-out;
+        white-space: nowrap; /* Ensure text stays in a single line */
+    }
+    
+    .neumorphic-music-button span {
+        @apply px-1;
+        display: inline-block;
+        position: absolute;
+        animation: scroll-text 6s linear infinite; /* Continuous scrolling animation */
+        white-space: nowrap; /* Ensure the text does not wrap to the next line */
+    }
+    
+    /* Active state for the button */
+    .neumorphic-music-button:active {
+        transform: scale(0.95);
+        box-shadow: inset var(--shadow-light), inset var(--shadow-dark);
+    }
+    
+    /* Keyframes for infinite right-to-left scrolling */
+    @keyframes scroll-text {
+        0% {
+            transform: translateX(100%); /* Start off-screen to the right */
+        }
+        100% {
+            transform: translateX(-100%); /* Move completely off-screen to the left */
+        }
+    }
+
     .music-active {
-        /* make box shadow none */
-        box-shadow: none;
+        box-shadow: none;   
+    }
+
+    .track-info {
+        @apply text-base overflow-hidden relative whitespace-nowrap;
+        color: var(--primary-color);
+        height: 1.5em; /* Ensure consistent height to prevent content disappearing */
+        /* ensure no text wrapping */
+        white-space: nowrap;
+    }
+    
+    .track-info span {
+        display: inline-block;
+        position: absolute;
+        white-space: nowrap;
+        left: 0; /* Start from the left edge */
+        top: 0; /* Ensure it aligns with the container */
+        animation: none; /* Default state: no animation */
+    }
+    
+    /* Keyframes for infinite scrolling */
+    @keyframes scroll-track-text {
+        0% {
+            transform: translateX(100%); /* Start completely off-screen to the right */
+        }
+        100% {
+            transform: translateX(-100%); /* Move completely off-screen to the left */
+        }
+    }
+
+    .volume-label {
+        @apply text-xs font-semibold;
+        color: var(--primary-color);
+    }
+
+    /* Just for Volume Slider */
+    .neumorphic-slider {
+        --tw-shadow: 0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.2), -0.5rem -0.5rem 1rem rgba(255, 255, 255, 0.7);
+        --slider-track-height: 8px;
+
+        background: var(--background-color);
+        border-radius: 999px;
+        box-shadow: var(--tw-shadow);
+        height: var(--slider-track-height);
+        outline: none;
+        -webkit-appearance: none;
+        position: relative;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Track styling */
+    .neumorphic-slider::-webkit-slider-runnable-track {
+        background: var(--primary-color);
+        border-radius: 999px;
+        height: var(--slider-track-height);
+        box-shadow: inset 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.2), inset -0.2rem -0.2rem 0.5rem rgba(255, 255, 255, 0.8);
+    }
+
+    .neumorphic-slider::-moz-range-track {
+        background: var(--primary-color);
+        border-radius: 999px;
+        height: var(--slider-track-height);
+        box-shadow: inset 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.2), inset -0.2rem -0.2rem 0.5rem rgba(255, 255, 255, 0.8);
+    }
+
+    .neumorphic-slider::-ms-track {
+        background: transparent;
+        border-color: transparent;
+        color: transparent;
+    }
+
+    /* Thumb styling */
+    .neumorphic-slider::-webkit-slider-thumb {
+        appearance: none;
+        width: 12px; /* Adjust thumb size */
+        height: 12px; /* Match the size for alignment */
+        margin-top: -2px; /* Center the thumb */
+        background-color: var(--accent-color);
+        border-radius: 50%;
+        box-shadow: 0.2rem 0.2rem 0.6rem rgba(0, 0, 0, 0.3), -0.2rem -0.2rem 0.6rem rgba(255, 255, 255, 0.8);
+        cursor: pointer;
+        transition: transform 0.2s ease;
+    }
+
+    .neumorphic-slider::-webkit-slider-thumb:hover {
+        transform: scale(1.2); /* Add hover effect */
+    }
+
+    .neumorphic-slider::-moz-range-thumb {
+        width: 12px; /* Match thumb size */
+        height: 12px;
+        background-color: var(--accent-color);
+        border-radius: 50%;
+        box-shadow: 0.2rem 0.2rem 0.6rem rgba(0, 0, 0, 0.3), -0.2rem -0.2rem 0.6rem rgba(255, 255, 255, 0.8);
+        cursor: pointer;
+        transition: transform 0.2s ease;
+    }
+
+    .neumorphic-slider::-moz-range-thumb:hover {
+        transform: scale(1.2);
+    }
+
+    .neumorphic-slider::-ms-thumb {
+        width: 12px; /* Match thumb size */
+        height: 12px;
+        background-color: var(--accent-color);
+        border-radius: 50%;
+        box-shadow: 0.2rem 0.2rem 0.6rem rgba(0, 0, 0, 0.3), -0.2rem -0.2rem 0.6rem rgba(255, 255, 255, 0.8);
+        cursor: pointer;
+        transition: transform 0.2s ease;
+    }
+
+    .neumorphic-slider::-ms-thumb:hover {
+        transform: scale(1.2);
     }
 }

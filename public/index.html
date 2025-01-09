@@ -56,11 +56,11 @@
             </div>
             <!-- Settings -->
             <div id="settings"
-                class="neumorphic-box  flex flex-col justify-start items-center rounded-lg p-4 gap-6 pb-6">
+                class="neumorphic-box  flex flex-col justify-start items-center rounded-lg p-4 pb-6">
                 <button id="theme-toggle" class="neumorphic-button w-full flex items-center justify-center">
                     <span class="material-symbols-outlined">lightbulb</span>
                 </button>
-
+                <div class="divider"></div>
                 <div id="forms" class="grid grid-cols-3 gap-4">
 
                     <!-- Focus Timer Length -->
@@ -104,20 +104,78 @@
                     </form>
 
                 </div>
-
+                <div class="divider"></div>
                 <form id="task-form" class="flex flex-col space-y-4 w-full">
                     <!-- Task Tag -->
-                    <div class="flex items-center space-x-2">
-                        <label for="task-tag" class="text-light-primary w-1/5">Tag:</label>
-                        <input id="task-tag" type="text" placeholder="e.g., Research"
-                            class="neumorphic-form flex-grow text-center" required />
+                    <div class="flex items-center">
+                        <!-- <label for="task-tag" class="text-light-primary w-1/5">Tag:</label> -->
+                        <select id="task-tag" class="neumorphic-form flex-grow text-start" required>
+                            <option value="" disabled selected>Select a Tag</option>
+                            
+                            <!-- Research & Academic Tags -->
+                            <optgroup label="Research & Academic Tags">
+                                <option value="System Research">System Research</option>
+                                <option value="Computer Architecture">Computer Architecture</option>
+                                <option value="Operating Systems">Operating Systems</option>
+                                <option value="Linux Kernel">Linux Kernel</option>
+                                <option value="CXL Exploration">CXL Exploration</option>
+                                <option value="GPU Research">GPU Research</option>
+                                <option value="LLM for Systems">LLM for Systems</option>
+                                <option value="Mathematical CS">Mathematical CS</option>
+                                <option value="Theoretical CS">Theoretical CS</option>
+                                <option value="Quantum Computing">Quantum Computing</option>
+                                <option value="NLP Research">NLP Research</option>
+                            </optgroup>
+                    
+                            <!-- Professional & Work Tags -->
+                            <optgroup label="Professional & Work Tags">
+                                <option value="Android Automation">Android Automation</option>
+                                <option value="ML Projects">ML Projects</option>
+                                <option value="Samsung Collaboration">Samsung Collaboration</option>
+                                <option value="Ph.D. Prep">Ph.D. Prep</option>
+                                <option value="Professional Development">Professional Development</option>
+                            </optgroup>
+                    
+                            <!-- Learning & Skill Development Tags -->
+                            <optgroup label="Learning & Skill Development Tags">
+                                <option value="English Practice">English Practice</option>
+                                <option value="Communication Skills">Communication Skills</option>
+                                <option value="Mathematical Foundations">Mathematical Foundations</option>
+                                <option value="Algorithms & Data Structures">Algorithms & Data Structures</option>
+                                <option value="Code Optimization">Code Optimization</option>
+                            </optgroup>
+                    
+                            <!-- Personal Growth Tags -->
+                            <optgroup label="Personal Growth Tags">
+                                <option value="Critical Thinking">Critical Thinking</option>
+                                <option value="Creativity Boost">Creativity Boost</option>
+                                <option value="Comfort Zone Expansion">Comfort Zone Expansion</option>
+                            </optgroup>
+                    
+                            <!-- Personal Interests Tags -->
+                            <optgroup label="Personal Interests Tags">
+                                <option value="Music">Music</option>
+                                <option value="Relaxation">Relaxation</option>
+                                <option value="Hobbies">Hobbies</option>
+                                <option value="Reading">Reading</option>
+                                <option value="Exercise">Exercise</option>
+                            </optgroup>
+                    
+                            <!-- Miscellaneous Tags -->
+                            <optgroup label="Miscellaneous Tags">
+                                <option value="Productivity">Productivity</option>
+                                <option value="Brainstorming">Brainstorming</option>
+                                <option value="Focused Study">Focused Study</option>
+                                <option value="Break Time">Break Time</option>
+                            </optgroup>
+                        </select>
                     </div>
-
+                    
                     <!-- Task Name -->
                     <div class="flex items-center space-x-2">
-                        <label for="task-name" class="text-light-primary w-1/5">Name:</label>
-                        <input id="task-name" type="text" placeholder="e.g., Analyze Data"
-                            class="neumorphic-form flex-grow text-center" required />
+                        <!-- <label for="task-name" class="text-light-primary w-1/5">Name:</label> -->
+                        <input id="task-name" type="text" placeholder="Name of Topic"
+                            class="neumorphic-form flex-grow text-start" required />
                     </div>
 
                     <!-- Submit Button -->
@@ -128,7 +186,7 @@
 
 
             </div>
-            <div id="music" class="neumorphic-box flex-grow">
+            <div class="neumorphic-box flex-grow">
                 <!-- <iframe width="200" height="150" src="https://www.youtube.com/embed/jfKfPfyJRdk?si=T_bXTdCRU8WGaYKP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> -->
             </div>
         </div>
@@ -194,7 +252,7 @@
         <!-- Right Column -->
         <div class="flex flex-col h-screen py-10 space-y-6 col-span-4">
             <!-- Music -->
-            <div id="music" class="neumorphic-box flex h-72 rounded-lg p-4 items-center gap-16">
+            <!-- <div id="music" class="neumorphic-box flex h-72 rounded-lg p-4 items-center gap-16">
                 <iframe 
                     id="music-iframe" 
                     width="200" 
@@ -207,8 +265,70 @@
                     allowfullscreen>
                 </iframe>
                 <div class="grid grid-cols-5 gap-8">
-                    <!-- 16 buttons will be rendered here dynamically -->
                 </div>
+            </div> -->
+            <div id="music" class="neumorphic-box flex justify-between items-center h-72 rounded-lg p-4">
+                <div class="flex flex-col gap-4 items-start">
+                    <div class="flex items-center justify-start gap-4">
+                        <!-- Play/Pause Button -->
+                        <button
+                            id="play-pause"
+                            class="neumorphic-musicplay-button"
+                        >
+                        <span class="material-symbols-outlined">
+                            pause
+                        </span>
+                        </button>
+                        <button
+                            id="next-music"
+                            class="neumorphic-musicplay-button"
+                        >
+                        <span class="material-symbols-outlined">
+                            skip_next
+                        </span>
+                        </button>
+                        <button
+                            id="brown-noise"
+                            class="neumorphic-musicplay-button"
+                        >
+                        <span class="material-symbols-outlined">
+                            graphic_eq
+                            </span>
+                        </button>
+                        <button
+                            id="rain"
+                            class="neumorphic-musicplay-button"
+                        >
+                        <span class="material-symbols-outlined">
+                            rainy_light
+                        </span>
+                        </button>
+                        
+                    </div>
+                    <div class="flex flex-col">
+                        <!-- Track Info Display -->
+                        <div id="track-info" class="track-info">
+                            Now Playing<span></span>
+                        </div>
+                    
+                        <!-- Volume Control -->
+                        <div class="flex items-center gap-2">
+                            <label for="volume-slider" class="volume-label">Volume:</label>
+                            <input
+                                id="volume-slider"
+                                type="range"
+                                min="0"
+                                max="1"
+                                step="0.01"
+                                value="0.5"
+                                class="neumorphic-slider w-full appearance-none cursor-pointer"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Playlist Buttons -->
+                <div id="playlist-buttons" class="grid grid-cols-4 gap-6"></div>
             </div>
             <!-- Analytics -->
             <div id="analytics" class="neumorphic-box h-full rounded-lg py-4">
