@@ -4,7 +4,7 @@
   "shortBreakDuration": 60,
   "longBreakDuration": 60,
   "focusSpree": 4,
-  "completedFocusSessions": 0,
+  "completedFocusSessions": 1,
   "timeRemaining": 60,
-  "playState": "pause"
+  "playState": "play"
 }

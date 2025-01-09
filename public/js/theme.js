@@ -28,6 +28,10 @@
         } else {
             setLightMode();
         }
+    
+        // Dispatch a custom event to notify the chart logic
+        const themeChangeEvent = new CustomEvent("themeChange");
+        document.dispatchEvent(themeChangeEvent);
     }
 
     // Set default theme on page load

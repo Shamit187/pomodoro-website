@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Doto:wght,ROND@100..900,100&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body class="font-nunito flex items-center justify-center h-screen">
@@ -336,15 +337,7 @@
                 </div>
             </div>
             <div id="daily-progress" class="neumorphic-box h-72 rounded-lg p-4">
-                <div id="daily-progress" class="flex flex-col space-y-4">
-                    <div class="flex justify-between items-center">
-                        <p class="text-lg">Daily Progress</p>
-                        <p class="text-lg">4/4</p>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-indicator"></div>
-                    </div>
-                </div>
+                <canvas id="dailyProgressChart" width="400" height="200"></canvas>
             </div>  
 
         </div>
@@ -354,6 +347,7 @@
     <script src="js/theme.js"></script>
     <script src="js/todo.js"></script>
     <script src="js/music.js"></script>
+    <script src="js/analytics.js"></script>
 </body>
 
 </html>

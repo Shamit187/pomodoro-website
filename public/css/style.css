@@ -1389,7 +1389,7 @@ video {
   --slider-track-height: 8px;
   background: var(--background-color);
   border-radius: 999px;
-  box-shadow: var(--tw-shadow);
+  /* box-shadow: var(--tw-shadow); */
   height: var(--slider-track-height);
   outline: none;
   -webkit-appearance: none;
@@ -1433,7 +1433,9 @@ video {
   /* Center the thumb */
   background-color: var(--accent-color);
   border-radius: 50%;
-  box-shadow: 0.2rem 0.2rem 0.6rem rgba(0, 0, 0, 0.3), -0.2rem -0.2rem 0.6rem rgba(255, 255, 255, 0.8);
+  /* box-shadow: 0.2rem 0.2rem 0.6rem rgba(0, 0, 0, 0.3), -0.2rem -0.2rem 0.6rem rgba(255, 255, 255, 0.8); */
+  /* box shadow with accent color */
+  box-shadow: 0 0 1rem var(--accent-color);
   cursor: pointer;
   -webkit-transition: transform 0.2s ease;
   transition: transform 0.2s ease;
@@ -1450,7 +1452,7 @@ video {
   height: 12px;
   background-color: var(--accent-color);
   border-radius: 50%;
-  box-shadow: 0.2rem 0.2rem 0.6rem rgba(0, 0, 0, 0.3), -0.2rem -0.2rem 0.6rem rgba(255, 255, 255, 0.8);
+  /* box-shadow: 0.2rem 0.2rem 0.6rem rgba(0, 0, 0, 0.3), -0.2rem -0.2rem 0.6rem rgba(255, 255, 255, 0.8); */
   cursor: pointer;
   -moz-transition: transform 0.2s ease;
   transition: transform 0.2s ease;
@@ -1466,7 +1468,7 @@ video {
   height: 12px;
   background-color: var(--accent-color);
   border-radius: 50%;
-  box-shadow: 0.2rem 0.2rem 0.6rem rgba(0, 0, 0, 0.3), -0.2rem -0.2rem 0.6rem rgba(255, 255, 255, 0.8);
+  /* box-shadow: 0.2rem 0.2rem 0.6rem rgba(0, 0, 0, 0.3), -0.2rem -0.2rem 0.6rem rgba(255, 255, 255, 0.8); */
   cursor: pointer;
   -ms-transition: transform 0.2s ease;
   transition: transform 0.2s ease;

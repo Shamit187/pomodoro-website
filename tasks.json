@@ -2,55 +2,19 @@
   {
     "tag": "Software Engineering",
     "topic": "Write Introduction Section",
-    "minute": 96,
+    "minute": 97,
     "active": true
-  },
-  {
-    "tag": "Research",
-    "topic": "Review Literature",
-    "minute": 50,
-    "active": false
-  },
-  {
-    "tag": "Software Engineering",
-    "topic": "Write Abstract",
-    "minute": 30,
-    "active": false
-  },
-  {
-    "tag": "Data Analysis",
-    "topic": "Clean Dataset",
-    "minute": 40,
-    "active": false
-  },
-  {
-    "tag": "Research",
-    "topic": "Analyze Survey Results",
-    "minute": 45,
-    "active": false
-  },
-  {
-    "tag": "Software Engineering",
-    "topic": "Debug API Integration",
-    "minute": 60,
-    "active": false
-  },
-  {
-    "tag": "Research",
-    "topic": "Write Methodology Section",
-    "minute": 80,
-    "active": false
-  },
-  {
-    "tag": "Data Analysis",
-    "topic": "Generate Visualizations",
-    "minute": 35,
-    "active": false
   },
   {
     "tag": "Research",
     "topic": "Analuze Dataset",
     "minute": 0,
+    "active": false
+  },
+  {
+    "tag": "System Design",
+    "topic": "Evaluate Load Balancer Options",
+    "minute": 55,
     "active": false
   }
 ]

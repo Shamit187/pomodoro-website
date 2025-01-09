@@ -215,11 +215,27 @@ function getCurrentDuration() {
     return longBreakDuration;
 }
 
+async function saveActivity(tag, topic, timeSpent) {
+    try {
+        const response = await fetch('/api/saveActivity', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ tag, topic, timeSpent }),
+        });
+        if (!response.ok) {
+            throw new Error('Failed to save activity');
+        }
+        console.log('Activity saved successfully');
+    } catch (error) {
+        console.error('Error saving activity:', error);
+    }
+}
+
 
 let isSwitchingState = false;
 
 function switchToNextState() {
-    if (isSwitchingState) return; // Prevent concurrent state switches
+    if (isSwitchingState) return;
     isSwitchingState = true;
 
     if (timerState === "focus") {
@@ -228,12 +244,14 @@ function switchToNextState() {
 
         const activeTask = tasks.find((task) => task.active);
         if (activeTask) {
-            activeTask.minute += focusDuration / 60;
+            const timeSpent = focusDuration / 60;
+            saveActivity(activeTask.tag, activeTask.topic, timeSpent); // Save the activity
+            activeTask.minute += timeSpent;
             if (activeTask.minute <= 0) {
                 activeTask.active = false;
             }
             renderTasks();
-            saveTasks(); 
+            saveTasks();
         }
 
         timerState =
@@ -568,20 +586,57 @@ async function saveArchivedTasks() {
     }
 }
 
-// Render Archived Tasks
+// Permanent Delete Archived Task
+function handlePermanentDeletion(index) {
+    // Remove the task from archivedTasks
+    archivedTasks.splice(index, 1);
+
+    // Save the updated archive list
+    saveArchivedTasks();
+
+    // Re-render archived tasks
+    renderArchivedTasks();
+}
+
+// Recycle Archived Task
+function handleTaskRecycle(index) {
+    // Remove the task from archivedTasks and add it back to the main tasks list
+    const [recycledTask] = archivedTasks.splice(index, 1);
+    recycledTask.active = false; // Ensure the recycled task is inactive
+    tasks.push(recycledTask);
+
+    // Save the updated lists
+    saveArchivedTasks();
+    saveTasks();
+
+    // Re-render tasks and archived tasks
+    renderTasks();
+    renderArchivedTasks();
+}
+
+// Render Archived Tasks (Updated to include permanent delete)
 function renderArchivedTasks() {
     archiveTaskContainer.innerHTML = "";
 
-    archivedTasks.forEach((task) => {
+    archivedTasks.forEach((task, index) => {
         const taskElement = document.createElement("div");
         taskElement.className = "archived";
         taskElement.innerHTML = `
             <div class="flex justify-start items-center w-full gap-4">
                 <button class="neumorphic-button recycle-button"><span class="material-symbols-outlined">recycling</span></button>
-                <button class="neumorphic-button recycle-button"><span class="material-symbols-outlined">delete_forever</span></button>
+                <button class="neumorphic-button delete-button"><span class="material-symbols-outlined">delete_forever</span></button>
                 <p class="text-base"> <span class="font-semibold">${task.topic}</span>, <span class="font-semibold" style="color:var(--accent-color)">${task.minute}</span> mins</p>
             </div>
         `;
+
+        // Add event listener for the recycle button
+        const recycleButton = taskElement.querySelector(".recycle-button");
+        recycleButton.addEventListener("click", () => handleTaskRecycle(index));
+
+        // Add event listener for the permanent delete button
+        const deleteButton = taskElement.querySelector(".delete-button");
+        deleteButton.addEventListener("click", () => handlePermanentDeletion(index));
+
         archiveTaskContainer.appendChild(taskElement);
     });
 }

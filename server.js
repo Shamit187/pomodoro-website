@@ -60,7 +60,6 @@ app.get('/api/timer', (req, res) => {
 // Endpoint to update timer state
 app.post('/api/timer', (req, res) => {
     const updatedTimerState = req.body;
-    console.log('Updating timer state...', updatedTimerState);
     fs.writeFile(timerFilePath, JSON.stringify(updatedTimerState, null, 2), (err) => {
         if (err) {
             console.error('Error writing to timer file:', err);
@@ -93,6 +92,8 @@ app.get('/api/archived-tasks', (req, res) => {
 // Update Archived Tasks
 app.post('/api/archived-tasks', (req, res) => {
     const updatedArchivedTasks = req.body;
+    //make sure every task is not active before saving
+    updatedArchivedTasks.forEach(task => task.active = false);
     console.log('Updating archived tasks...', updatedArchivedTasks);
     fs.writeFile(archivedTasksFilePath, JSON.stringify(updatedArchivedTasks, null, 2), (err) => {
         if (err) {
@@ -129,6 +130,81 @@ app.get('/api/playlists', (req, res) => {
         res.json({ playlists });
     });
 });
+
+const historyFilePath = path.join(__dirname, 'history.json');
+
+// Helper function to read and write JSON data
+function readJSON(filePath) {
+    if (!fs.existsSync(filePath)) {
+        return [];
+    }
+    const data = fs.readFileSync(filePath);
+    return JSON.parse(data);
+}
+
+function writeJSON(filePath, data) {
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+}
+
+// API to save Pomodoro session data
+app.post('/api/saveActivity', (req, res) => {
+    const { tag, topic, timeSpent } = req.body;
+    console.log('Saving activity:', tag, topic, timeSpent);
+
+    if (!tag || !topic || !timeSpent) {
+        return res.status(400).send({ error: 'Missing required fields: tag, topic, or timeSpent' });
+    }
+
+    const history = readJSON(historyFilePath);
+    history.push({ tag, topic, timeSpent, date: new Date().toISOString() });
+
+    writeJSON(historyFilePath, history);
+
+    res.status(200).send({ message: 'Activity saved successfully' });
+});
+
+// API to fetch progress data
+app.get('/api/progress', (req, res) => {
+    if (!fs.existsSync(historyFilePath)) {
+        return res.status(404).send({ error: "History file not found" });
+    }
+
+    const historyData = JSON.parse(fs.readFileSync(historyFilePath, 'utf8'));
+
+    // Aggregate data by date
+    const progressData = historyData.reduce((acc, entry) => {
+        const date = entry.date.split('T')[0]; // Extract date part
+        acc[date] = (acc[date] || 0) + entry.timeSpent; // Sum minutes for each date
+        return acc;
+    }, {});
+
+    // Get today's date and the date 10 days ago, normalize to YYYY-MM-DD
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Strip time
+    const tenDaysAgo = new Date(today);
+    tenDaysAgo.setDate(today.getDate() - 10);
+
+    // Filter the progress data for the last 10 days
+    const filteredProgressData = Object.keys(progressData)
+        .filter(date => {
+            const currentDate = new Date(date);
+            currentDate.setHours(0, 0, 0, 0); // Strip time
+            return currentDate >= tenDaysAgo && currentDate <= today;
+        })
+        .reduce((acc, date) => {
+            acc[date] = progressData[date];
+            return acc;
+        }, {});
+
+    // Prepare the response
+    const labels = Object.keys(filteredProgressData).sort(); // Sorted dates
+    const dailyHours = labels.map((date) => (filteredProgressData[date] / 60).toFixed(2)); // Convert minutes to hours and round to 2 decimals
+
+    console.log('Fetching progress data for the last 10 days:', labels, dailyHours);
+
+    res.status(200).json({ labels, dailyHours });
+});
+
 
 // Default route
 app.get('/', (req, res) => {
