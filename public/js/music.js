@@ -189,16 +189,28 @@ function shuffleArray(array) {
 // Create an audio map to store audio objects and their states
 const audioMap = {
     'brown-noise': {
-        file: 'resource/brown_noise.mp3',
+        files: [
+            'resource/brown_noise_1.mp3',
+            'resource/brown_noise_2.mp3',
+            'resource/brown_noise_3.mp3',
+            'resource/brown_noise_4.mp3'
+        ],
+        currentFileIndex: 0,
         audio: null,
         volumeLevels: [0.75, 0.5, 0.25, 0.05, 0],
-        currentLevelIndex: 0
+        currentVolumeIndex: 0
     },
     'rain': {
-        file: 'resource/rain.mp3',
+        files: [
+            'resource/rain_1.mp3',
+            'resource/rain_2.mp3',
+            'resource/rain_3.mp3',
+            'resource/rain_4.mp3'
+        ],
+        currentFileIndex: 0,
         audio: null,
         volumeLevels: [0.75, 0.5, 0.25, 0.05, 0],
-        currentLevelIndex: 0
+        currentVolumeIndex: 0
     }
 };
 
@@ -207,19 +219,26 @@ function handleSoundButtonClick(buttonId) {
     const sound = audioMap[buttonId];
 
     if (!sound.audio) {
-        // Initialize the audio object if not already done
-        sound.audio = new Audio(sound.file);
+        // Initialize the audio object for the current file if not already done
+        sound.audio = new Audio(sound.files[sound.currentFileIndex]);
         sound.audio.loop = true; // Loop the sound continuously
     }
 
     // Update the volume to the next level
-    sound.currentLevelIndex = (sound.currentLevelIndex + 1) % sound.volumeLevels.length;
-    const newVolume = sound.volumeLevels[sound.currentLevelIndex];
+    sound.currentVolumeIndex = (sound.currentVolumeIndex + 1) % sound.volumeLevels.length;
+    const newVolume = sound.volumeLevels[sound.currentVolumeIndex];
 
     if (newVolume === 0) {
-        // Stop the sound if volume is 0
+        // Stop the current sound if volume is 0
         sound.audio.pause();
         sound.audio.currentTime = 0; // Reset the playback position
+
+        // Move to the next file in the list
+        sound.currentFileIndex = (sound.currentFileIndex + 1) % sound.files.length;
+
+        // Update the audio object to the next file
+        sound.audio = new Audio(sound.files[sound.currentFileIndex]);
+        sound.audio.loop = true;
     } else {
         // Play the sound with the updated volume
         sound.audio.volume = newVolume;
