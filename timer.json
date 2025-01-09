@@ -1,10 +1,10 @@
 {
   "timerState": "focus",
-  "focusDuration": 60,
-  "shortBreakDuration": 60,
-  "longBreakDuration": 60,
+  "focusDuration": 1500,
+  "shortBreakDuration": 300,
+  "longBreakDuration": 900,
   "focusSpree": 4,
-  "completedFocusSessions": 1,
-  "timeRemaining": 60,
-  "playState": "play"
+  "completedFocusSessions": 0,
+  "timeRemaining": 1500,
+  "playState": "pause"
 }
