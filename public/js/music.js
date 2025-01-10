@@ -37,6 +37,24 @@
 //     gridContainer.appendChild(button);
 // });
 
+/*
+<div id="music" class="neumorphic-box flex h-72 rounded-lg p-4 items-center gap-16">
+    <iframe 
+        id="music-iframe" 
+        width="200" 
+        height="150" 
+        src="https://www.youtube.com/embed/jfKfPfyJRdk?si=JnJryx0uYwVDwqy_&amp;controls=0" 
+        title="YouTube video player" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        referrerpolicy="strict-origin-when-cross-origin" 
+        allowfullscreen>
+    </iframe>
+    <div class="grid grid-cols-5 gap-8">
+    </div>
+</div> 
+*/
+
 /* New Audio Based Logic */
 
 let currentAudio = null; // To keep track of the current audio object
