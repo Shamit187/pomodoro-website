@@ -1,3 +1,20 @@
 [
-  
+  {
+    "tag": "Mathematical Foundations",
+    "topic": "x^2 + ny^2 : 1C",
+    "timeSpent": 45,
+    "date": "2025-02-10T18:14:26.581Z"
+  },
+  {
+    "tag": "ML Projects",
+    "topic": "Fix Introduction of LELANTE",
+    "timeSpent": 45,
+    "date": "2025-02-10T19:24:22.777Z"
+  },
+  {
+    "tag": "ML Projects",
+    "topic": "Run Verilator",
+    "timeSpent": 45,
+    "date": "2025-02-10T20:53:25.122Z"
+  }
 ]

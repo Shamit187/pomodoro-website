@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "tag": "ML Projects",
+    "topic": "Run Verilator",
+    "minute": 45,
+    "active": true
+  },
+  {
+    "tag": "ML Projects",
+    "topic": "Fix Introduction of LELANTE",
+    "minute": 45,
+    "active": false
+  },
+  {
+    "tag": "Mathematical Foundations",
+    "topic": "x^2 + ny^2 : 1C",
+    "minute": 45,
+    "active": false
+  },
+  {
+    "tag": "Mathematical Foundations",
+    "topic": "x^2 + ny^2 : 1D",
+    "minute": 0,
+    "active": false
+  }
+]
